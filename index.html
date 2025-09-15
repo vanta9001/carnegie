@@ -1996,6 +1996,69 @@ _hsp.push(['addPrivacyConsentListener', function(consent){
 </section>
 <!-- Hello Kitty content section end -->
 
+		 	<!-- Script: rewrite visible buttons & nav links to Hello Kitty/Sanrio URLs -->
+                <script>
+                (function(){
+                    const sanrio = {
+                        home: 'https://www.sanrio.com/',
+                        shop: 'https://www.sanrio.com/collections/hello-kitty',
+                        about: 'https://www.sanrio.com/pages/hello-kitty',
+                        world: 'https://www.sanrio.com/pages/hello-kitty-world',
+                        events: 'https://www.sanrio.com/pages/events',
+                        contact: 'https://www.sanrio.com/pages/contact-us',
+                        store: 'https://www.sanrio.com/pages/store-locator'
+                    };
+                    function setLink(a, url){
+                        try{
+                            a.setAttribute('href', url);
+                            a.setAttribute('target','_blank');
+                            a.setAttribute('rel','noopener');
+                        }catch(e){}
+                    }
+
+                    // Target visible buttons/CTAs
+                    document.querySelectorAll('a.btn, a.button, a.upper, a[class*="hero-top-btn"], .hero-top-btn a').forEach(a=>{
+                        const text = (a.textContent||'').toLowerCase();
+                        if(text.includes('shop')||text.includes('visit')||text.includes('store')) setLink(a, sanrio.shop);
+                        else if(text.includes('contact')||text.includes('talk')||text.includes('let')) setLink(a, sanrio.contact);
+                        else if(text.includes('view all') || text.includes('blog') || text.includes('articles')) setLink(a, sanrio.home);
+                        else setLink(a, sanrio.shop);
+                    });
+
+                    // Navigation and menu links
+                    document.querySelectorAll('nav a, .main-nav__list a, .hs-menu-wrapper a, .menu-link, .hs-menu-item a').forEach(a=>{
+                        const text = (a.textContent||'').toLowerCase();
+                        if(text.includes('sanrio')||text.includes('hello')) setLink(a, sanrio.home);
+                        else if(text.includes('shop')) setLink(a, sanrio.shop);
+                        else if(text.includes('contact')) setLink(a, sanrio.contact);
+                        else if(text.includes('events')) setLink(a, sanrio.events);
+                        else if(text.includes('support')||text.includes('help')||text.includes('sign')||text.includes('customer')) setLink(a, sanrio.home);
+                        else setLink(a, sanrio.home);
+                    });
+
+                    // Footer social icons -> map to Sanrio social accounts when possible
+                    const socialMap = {
+                        facebook:'https://www.facebook.com/Sanrio',
+                        twitter:'https://twitter.com/Sanrio',
+                        linkedin:'https://www.linkedin.com/company/sanrio/'
+                    };
+                    document.querySelectorAll('.social_icons a, .f_icons a').forEach(a=>{
+                        const href = (a.getAttribute('href')||'').toLowerCase();
+                        if(href.includes('facebook')) setLink(a, socialMap.facebook);
+                        else if(href.includes('twitter')||href.includes('x')) setLink(a, socialMap.twitter);
+                        else if(href.includes('linkedin')) setLink(a, socialMap.linkedin);
+                        else setLink(a, sanrio.home);
+                    });
+
+                    // Replace other common call-to-action links (e.g., sample center, help center)
+                    const extraSelectors = ['a[href*="carnegielearning.com/samples"]','a[href*="support.carnegielearning.com"]','a[href*="cl-login"]','a[href*="lets-talk"]'];
+                    extraSelectors.forEach(sel=>{
+                        document.querySelectorAll(sel).forEach(a=> setLink(a, sanrio.home));
+                    });
+
+                })();
+                </script>
+
 		 	<div data-global-resource-path="carnegie-theme/templates/partials/footer.html"><footer class="footer">
 <div id="hs_cos_wrapper_module_171403480103213" class="hs_cos_wrapper hs_cos_wrapper_widget hs_cos_wrapper_type_module widget-type-form" style="" data-hs-cos-general-type="widget" data-hs-cos-type="module"><div class="footer_area">
 	<div class="content-wrapper">
