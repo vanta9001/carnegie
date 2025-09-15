@@ -1,2 +1,0 @@
-# carnegie
-hk
